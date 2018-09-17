@@ -94,5 +94,92 @@ namespace WindowsFormsApplication1
                     }
             pictureBox1.Image = sub_image;
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            /*Form f = new Form();
+            f.Text = "Гистограмма";
+            f.Size = new Size(778, 610);
+            f.ShowInTaskbar = false;
+            f.MinimizeBox = false;
+            f.MaximizeBox = false;
+            f.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            
+
+            /*PictureBox p_box = new PictureBox();
+            p_box.Location = new Point(10, 10);
+            p_box.Size = new Size(768, 600);
+            p_box.SizeMode = PictureBoxSizeMode.StretchImage;
+            
+
+            p_box.Image = black_white1; //CalculateBarChart();
+            Graphics g = f.CreateGraphics();
+            g.DrawImage(black_white1, new Point(5, 5));
+            f.ShowDialog(this);*/
+
+            pictureBox3.Image = CalculateBarChart();
+        }
+
+        public Image CalculateBarChart () 
+        { 
+            Bitmap barChart = null; 
+           
+            int width = 768, height = 600; 
+
+            Bitmap bmp = b_image; 
+
+            barChart = new Bitmap (width, height); 
+ 
+            int[] R = new int[256]; 
+            int[] G = new int[256]; 
+            int[] B = new int[256]; 
+
+            for (int i = 0; i < bmp.Width; ++i) 
+                for (int j = 0; j < bmp.Height; ++j) 
+                { 
+                    Color color = bmp.GetPixel (i, j); 
+                    ++R[color.R]; 
+                    ++G[color.G]; 
+                    ++B[color.B]; 
+                } 
+
+            int max = 0; 
+            for (int i = 0; i < 256; ++i) 
+            { 
+                if (R[i] > max) 
+                    max = R[i]; 
+                else
+                    if (G[i] > max) 
+                       max = G[i]; 
+                    else
+                        if (B[i] > max) 
+                            max = B[i]; 
+            } 
+
+            double point = (double)max / height; 
+
+            for (int i = 0; i < width - 3; ++i) 
+            {
+                for (int j = height - 1; j > height - R[i / 3] / point; --j) 
+                { 
+                    barChart.SetPixel (i, j, Color.Red); 
+                } 
+                ++i; 
+
+                for (int j = height - 1; j > height - G[i / 3] / point; --j) 
+                { 
+                    barChart.SetPixel (i, j, Color.Green); 
+                } 
+                ++i; 
+            
+                for (int j = height - 1; j > height - B[i / 3] / point; --j) 
+                { 
+                    barChart.SetPixel (i, j, Color.Blue); 
+                } 
+            } 
+            return barChart; 
+        } 
+      
+    
     }
 }
